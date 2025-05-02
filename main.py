@@ -6,6 +6,7 @@ import greedy_algorithm as alg_gr
 import integer_linear_programming as alg_ilp
 import gantt_chart_generator as gcg
 import gantt_chart_by_station as gcs
+import gantt_chart_singe_pdf as gcpdf
 
 def main():
     print ("Welcome to the scheduler algorithm comparator\n\n")
@@ -17,6 +18,7 @@ def main():
     print ("5 - Integer Linear Programming")
     print ("11 - Gantt Chart Generator by Patient")
     print ("12 - Gantt Chart Generator by Station")
+    print ("13 - Gantt Charts combined as pdf")
     print ("\n")
 
     selection = int(input("Select an option: "))
@@ -37,6 +39,8 @@ def main():
             gcg.plot_patient_gantt()
         case 12:
             gcs.plot_station_gantt()
+        case 13:
+            gcpdf.generate_combined_report()
         case _:
             print("Algorithm not available")
 
