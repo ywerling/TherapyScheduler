@@ -169,3 +169,7 @@ dmypy.json
 cython_debug/
 
 /patient_schedule.csv
+/patient_gantt.pdf
+/patient_gantt.png
+/station_gantt.pdf
+/station_gantt.png

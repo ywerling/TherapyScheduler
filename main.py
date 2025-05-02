@@ -4,6 +4,8 @@ import simulated_annealing as alg_sa
 import basic_algorithm as alg_ba
 import greedy_algorithm as alg_gr
 import integer_linear_programming as alg_ilp
+import gantt_chart_generator as gcg
+import gantt_chart_by_station as gcs
 
 def main():
     print ("Welcome to the scheduler algorithm comparator\n\n")
@@ -13,6 +15,8 @@ def main():
     print ("3 - Ant Colony Algorithm")
     print ("4 - Greedy Algorithm")
     print ("5 - Integer Linear Programming")
+    print ("11 - Gantt Chart Generator by Patient")
+    print ("12 - Gantt Chart Generator by Station")
     print ("\n")
 
     selection = int(input("Select an option: "))
@@ -29,7 +33,11 @@ def main():
             alg_gr.simulate_day()
         case 5:
             alg_ilp.main()
-        case default:
+        case 11:
+            gcg.plot_patient_gantt()
+        case 12:
+            gcs.plot_station_gantt()
+        case _:
             print("Algorithm not available")
 
 

@@ -14,7 +14,7 @@ def main():
     STATIONS = {
         'doctor': {'count': 5, 'duration': 30},
         'therapist': {'count': 9, 'duration': 30},
-        'dietetician': {'count': 7, 'duration': 30},
+        'dietitian': {'count': 7, 'duration': 30},
         'ecg': {'count': 8, 'duration': 20},
         'blood': {'count': 11, 'duration': 20},
     }
