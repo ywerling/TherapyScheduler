@@ -1,230 +1,128 @@
 import random
-
 import math
 
-import time
-
 # Constants
-
 NUM_PATIENTS = 10
-
 NUM_STATIONS = 5
-
 START_TIME = 13 * 60  # 13:00 in minutes
-
 END_TIME = 19 * 60  # 19:00 in minutes
 
 STATION_NAMES = ["General Practitioner", "Dietitian", "Orthopedist", "Blood Sample", "Electrocardiogram"]
-
 STATION_TIMES = {
-
-    "General Practitioner": 30,  # 30 minutes
-
-    "Dietitian": 30,  # 30 minutes
-
-    "Orthopedist": 30,  # 30 minutes
-
-    "Blood Sample": 20,  # 20 minutes
-
-    "Electrocardiogram": 20  # 20 minutes
-
+    "General Practitioner": 30,
+    "Dietitian": 30,
+    "Orthopedist": 30,
+    "Blood Sample": 20,
+    "Electrocardiogram": 20
 }
 
-INITIAL_TEMP = 1000.0  # Initial temperature for simulated annealing
+INITIAL_TEMP = 1000.0
+FINAL_TEMP = 0.01
+ANNEALING_RATE = 0.995
 
-FINAL_TEMP = 0.01  # Final temperature
-
-ANNEALING_RATE = 0.995  # Annealing rate
-
-
-# State representation (schedule)
 
 class Schedule:
-
     def __init__(self, visits):
-
-        # visits is a list of lists representing patient visit orders to stations
-
         self.visits = visits
 
     def get_cost(self):
-
-        """ Calculate the total waiting time (cost) for the current schedule """
-
-        # Station availability time (when each station becomes free)
-
+        """Calculate waiting time for each patient and return the list."""
         station_available = {station: START_TIME for station in STATION_NAMES}
-
-        total_waiting_time = 0
-
-        # For each patient
+        waiting_times = [0] * NUM_PATIENTS
 
         for patient_idx in range(NUM_PATIENTS):
-
             arrival_time = START_TIME
 
             for station_idx in self.visits[patient_idx]:
                 station = STATION_NAMES[station_idx]
-
                 processing_time = STATION_TIMES[station]
 
-                # The patient can only visit the station when it's free
-
+                # Wait until both the patient and the station are available
                 start_time = max(arrival_time, station_available[station])
-
                 end_time = start_time + processing_time
 
-                # Update station availability
-
+                # Update the station's next available time
                 station_available[station] = end_time
 
-                # Add waiting time for this visit
+                # Waiting time is difference between arrival and actual start
+                waiting_times[patient_idx] += (start_time - arrival_time)
 
-                total_waiting_time += (start_time - arrival_time)
-
-                # Update the arrival time for the next station
-
+                # Update arrival time for next station
                 arrival_time = end_time
 
-        return total_waiting_time
+        return waiting_times
+
+    def total_cost(self):
+        return sum(self.get_cost())
 
     def perturb(self):
-
-        """ Generate a new schedule by swapping visits between two random patients """
-
-        new_visits = [list(patient_visits) for patient_visits in self.visits]  # Copy of visits list
-
-        # Select two random patients
-
-        patient1, patient2 = random.sample(range(NUM_PATIENTS), 2)
-
-        # Select two random stations for each patient
-
-        station1, station2 = random.sample(range(NUM_STATIONS), 2)
-
-        # Swap the visit order of the two stations for the two patients
-
-        new_visits[patient1][station1], new_visits[patient2][station2] = new_visits[patient2][station2], \
-        new_visits[patient1][station1]
-
+        new_visits = [list(v) for v in self.visits]
+        p1, p2 = random.sample(range(NUM_PATIENTS), 2)
+        s1, s2 = random.sample(range(NUM_STATIONS), 2)
+        new_visits[p1][s1], new_visits[p2][s2] = new_visits[p2][s2], new_visits[p1][s1]
         return Schedule(new_visits)
 
 
 def simulated_annealing(initial_schedule):
-    """ Perform the simulated annealing process """
-
-    current_schedule = initial_schedule
-
-    current_cost = current_schedule.get_cost()
-
-    best_schedule = current_schedule
-
+    current = initial_schedule
+    best = current
+    current_cost = current.total_cost()
     best_cost = current_cost
+    temp = INITIAL_TEMP
 
-    temperature = INITIAL_TEMP
-
-    while temperature > FINAL_TEMP:
-
-        # Perturb the schedule (make a small change)
-
-        new_schedule = current_schedule.perturb()
-
-        new_cost = new_schedule.get_cost()
-
-        # If the new schedule is better, accept it
+    while temp > FINAL_TEMP:
+        new_schedule = current.perturb()
+        new_cost = new_schedule.total_cost()
 
         if new_cost < current_cost:
-
-            current_schedule = new_schedule
-
+            current = new_schedule
             current_cost = new_cost
-
-            # If it's also the best we've found, update best_schedule
-
             if new_cost < best_cost:
-                best_schedule = new_schedule
-
+                best = new_schedule
                 best_cost = new_cost
-
         else:
-
-            # Otherwise, accept it with some probability
-
-            probability = math.exp((current_cost - new_cost) / temperature)
-
+            probability = math.exp((current_cost - new_cost) / temp)
             if random.random() < probability:
-                current_schedule = new_schedule
-
+                current = new_schedule
                 current_cost = new_cost
 
-        # Decrease the temperature
+        temp *= ANNEALING_RATE
 
-        temperature *= ANNEALING_RATE
-
-    return best_schedule
+    return best
 
 
 def generate_random_schedule():
-    """ Generate an initial random schedule for the patients """
-
-    visits = []
-
-    for _ in range(NUM_PATIENTS):
-        # Randomize the order of stations for each patient
-
-        visits.append(random.sample(range(NUM_STATIONS), NUM_STATIONS))
-
-    return Schedule(visits)
+    return Schedule([random.sample(range(NUM_STATIONS), NUM_STATIONS) for _ in range(NUM_PATIENTS)])
 
 
 def print_schedule(schedule):
-    """ Print the schedule in a readable format """
-
     for patient_idx in range(NUM_PATIENTS):
-
         print(f"Patient {patient_idx + 1}:")
-
         arrival_time = START_TIME
-
         for station_idx in schedule.visits[patient_idx]:
             station = STATION_NAMES[station_idx]
-
             processing_time = STATION_TIMES[station]
-
             start_time = arrival_time
-
-            end_time = arrival_time + processing_time
-
-            print(
-                f"  {station}: {start_time // 60:02d}:{start_time % 60:02d} to {end_time // 60:02d}:{end_time % 60:02d}")
-
+            end_time = start_time + processing_time
+            print(f"  {station}: {start_time // 60:02d}:{start_time % 60:02d} to {end_time // 60:02d}:{end_time % 60:02d}")
             arrival_time = end_time
-
         print()
 
 
-# Main function to run the simulation
-
 def main():
-    # Step 1: Generate an initial random schedule
-
     initial_schedule = generate_random_schedule()
-
-    # Step 2: Perform simulated annealing to find an optimal schedule
-
     best_schedule = simulated_annealing(initial_schedule)
 
-    # Step 3: Print the best schedule found
-
-    print("Best Schedule found:")
-
+    print("Best Schedule Found:\n")
     print_schedule(best_schedule)
 
-    # Step 4: Print the total waiting time (cost) of the best schedule
+    waiting_times = best_schedule.get_cost()
+    print("\nTotal Waiting Time per Patient:")
+    for idx, wt in enumerate(waiting_times):
+        print(f"  Patient {idx + 1}: {wt} minutes")
 
-    print(f"Total waiting time (cost): {best_schedule.get_cost()} minutes")
+    print(f"\nTotal Waiting Time (All Patients): {sum(waiting_times)} minutes")
 
 
 if __name__ == "__main__":
     main()
-

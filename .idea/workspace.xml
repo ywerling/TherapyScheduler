@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28e0e095-f80b-4b4a-ac1f-c9d34dc554e8" name="Changes" comment="Add scheduling algorithms">
+    <list default="true" id="28e0e095-f80b-4b4a-ac1f-c9d34dc554e8" name="Changes" comment="Update basic algorithm">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/basic_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/basic_algorithm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/simulated_annealing.py" beforeDir="false" afterPath="$PROJECT_DIR$/simulated_annealing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +70,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1746160156084</updated>
-      <workItem from="1746160157099" duration="2760000" />
+      <workItem from="1746160157099" duration="3551000" />
     </task>
     <task id="LOCAL-00001" summary="Add Initial Files">
       <option name="closed" value="true" />
@@ -96,7 +96,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746162338059</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Update basic algorithm">
+      <option name="closed" value="true" />
+      <created>1746163165330</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1746163165330</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,10 +113,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add Initial Files" />
     <MESSAGE value="Add scheduling algorithms" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add scheduling algorithms" />
+    <MESSAGE value="Update basic algorithm" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update basic algorithm" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TherapyScheduler$simulated_annealing.coverage" NAME="simulated_annealing Coverage Results" MODIFIED="1746162409276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TherapyScheduler$simulated_annealing.coverage" NAME="simulated_annealing Coverage Results" MODIFIED="1746163706336" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TherapyScheduler$ant_colony_optimization.coverage" NAME="ant_colony_optimization Coverage Results" MODIFIED="1746162348420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TherapyScheduler$main.coverage" NAME="main Coverage Results" MODIFIED="1746160456282" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TherapyScheduler$basic_algorithm.coverage" NAME="basic_algorithm Coverage Results" MODIFIED="1746162858922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
