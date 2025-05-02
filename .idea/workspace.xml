@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28e0e095-f80b-4b4a-ac1f-c9d34dc554e8" name="Changes" comment="Select Algorithm from Main&#10;- Calling the selected algorithm in a match statement">
-      <change afterPath="$PROJECT_DIR$/greedy_algorithm.py" afterDir="false" />
+    <list default="true" id="28e0e095-f80b-4b4a-ac1f-c9d34dc554e8" name="Changes" comment="Add Greedy scheduling algorithm">
+      <change afterPath="$PROJECT_DIR$/integer_linear_programming.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -104,7 +104,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1746160156084</updated>
-      <workItem from="1746160157099" duration="12263000" />
+      <workItem from="1746160157099" duration="15187000" />
     </task>
     <task id="LOCAL-00001" summary="Add Initial Files">
       <option name="closed" value="true" />
@@ -170,7 +170,23 @@
       <option name="project" value="LOCAL" />
       <updated>1746171316888</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Add Greedy scheduling algorithm">
+      <option name="closed" value="true" />
+      <created>1746173411899</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1746173411899</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add Greedy scheduling algorithm">
+      <option name="closed" value="true" />
+      <created>1746173421340</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746173421340</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,12 +199,13 @@
     <MESSAGE value="Update Ant Colony Algorithm" />
     <MESSAGE value="Move common constant to scheduling_parameters.py&#10;- Link basic_algorithm.py with parameter file&#10;- Link ant_colony_optimization.py with parameter file&#10;- Link simulated_annealing.py with parameter file" />
     <MESSAGE value="Select Algorithm from Main&#10;- Calling the selected algorithm in a match statement" />
-    <option name="LAST_COMMIT_MESSAGE" value="Select Algorithm from Main&#10;- Calling the selected algorithm in a match statement" />
+    <MESSAGE value="Add Greedy scheduling algorithm" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Greedy scheduling algorithm" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/TherapyScheduler$simulated_annealing.coverage" NAME="simulated_annealing Coverage Results" MODIFIED="1746166410297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TherapyScheduler$ant_colony_optimization.coverage" NAME="ant_colony_optimization Coverage Results" MODIFIED="1746167728155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/TherapyScheduler$main.coverage" NAME="main Coverage Results" MODIFIED="1746172535757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TherapyScheduler$main.coverage" NAME="main Coverage Results" MODIFIED="1746175729641" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TherapyScheduler$basic_algorithm.coverage" NAME="basic_algorithm Coverage Results" MODIFIED="1746166293390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

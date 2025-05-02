@@ -3,6 +3,7 @@ import ant_colony_optimization as alg_aco
 import simulated_annealing as alg_sa
 import basic_algorithm as alg_ba
 import greedy_algorithm as alg_gr
+import integer_linear_programming as alg_ilp
 
 def main():
     print ("Welcome to the scheduler algorithm comparator\n\n")
@@ -11,6 +12,7 @@ def main():
     print ("2 - Simulated Annealing Algorithm")
     print ("3 - Ant Colony Algorithm")
     print ("4 - Greedy Algorithm")
+    print ("5 - Integer Linear Programming")
     print ("\n")
 
     selection = int(input("Select an option: "))
@@ -25,6 +27,8 @@ def main():
             alg_aco.simulate_day()
         case 4:
             alg_gr.simulate_day()
+        case 5:
+            alg_ilp.main()
         case default:
             print("Algorithm not available")
 
