@@ -1,20 +1,21 @@
 import random
 import math
+import scheduling_parameters as sp
 
 # Constants
-NUM_PATIENTS = 10
-NUM_STATIONS = 5
-START_TIME = 13 * 60  # 13:00 in minutes
-END_TIME = 19 * 60  # 19:00 in minutes
-
-STATION_NAMES = ["General Practitioner", "Dietitian", "Orthopedist", "Blood Sample", "Electrocardiogram"]
-STATION_TIMES = {
-    "General Practitioner": 30,
-    "Dietitian": 30,
-    "Orthopedist": 30,
-    "Blood Sample": 20,
-    "Electrocardiogram": 20
-}
+# NUM_PATIENTS = 10
+# NUM_STATIONS = 5
+# START_TIME = 13 * 60  # 13:00 in minutes
+# END_TIME = 19 * 60  # 19:00 in minutes
+#
+# STATION_NAMES = ["General Practitioner", "Dietitian", "Orthopedist", "Blood Sample", "Electrocardiogram"]
+# STATION_TIMES = {
+#     "General Practitioner": 30,
+#     "Dietitian": 30,
+#     "Orthopedist": 30,
+#     "Blood Sample": 20,
+#     "Electrocardiogram": 20
+# }
 
 INITIAL_PHEROMONE = 1.0
 PHEROMONE_EVAPORATION = 0.95
@@ -30,15 +31,15 @@ class Schedule:
         self.visits = visits
 
     def get_cost(self):
-        station_available = {station: START_TIME for station in STATION_NAMES}
-        patient_available = [START_TIME for _ in range(NUM_PATIENTS)]
+        station_available = {station: sp.START_TIME for station in sp.STATION_NAMES}
+        patient_available = [sp.START_TIME for _ in range(sp.NUM_PATIENTS)]
         total_waiting_time = 0
 
         # Validate schedule while calculating cost
-        for patient_idx in range(NUM_PATIENTS):
+        for patient_idx in range(sp.NUM_PATIENTS):
             for station_idx in self.visits[patient_idx]:
-                station = STATION_NAMES[station_idx]
-                processing_time = STATION_TIMES[station]
+                station = sp.STATION_NAMES[station_idx]
+                processing_time = sp.STATION_TIMES[station]
 
                 start_time = max(patient_available[patient_idx], station_available[station])
                 end_time = start_time + processing_time
@@ -60,7 +61,7 @@ def select_next_station(current_station, unvisited, pheromones, alpha, beta):
     probabilities = []
     for station in unvisited:
         pheromone = pheromones[current_station][station] if current_station is not None else INITIAL_PHEROMONE
-        heuristic = 1.0 / STATION_TIMES[STATION_NAMES[station]]
+        heuristic = 1.0 / sp.STATION_TIMES[sp.STATION_NAMES[station]]
         probability = (pheromone ** alpha) * (heuristic ** beta)
         probabilities.append(probability)
 
@@ -72,7 +73,7 @@ def select_next_station(current_station, unvisited, pheromones, alpha, beta):
 
 # Ant Colony Optimization
 def ant_colony_optimization():
-    pheromones = [[INITIAL_PHEROMONE for _ in range(NUM_STATIONS)] for _ in range(NUM_STATIONS)]
+    pheromones = [[INITIAL_PHEROMONE for _ in range(sp.NUM_STATIONS)] for _ in range(sp.NUM_STATIONS)]
 
     best_schedule = None
     best_cost = float('inf')
@@ -84,8 +85,8 @@ def ant_colony_optimization():
             visits = []
 
             # Construct the visit schedule for each patient
-            for patient in range(NUM_PATIENTS):
-                unvisited = list(range(NUM_STATIONS))
+            for patient in range(sp.NUM_PATIENTS):
+                unvisited = list(range(sp.NUM_STATIONS))
                 visit_order = []
                 current_station = None
 
@@ -125,8 +126,8 @@ def ant_colony_optimization():
             cost = schedule.get_cost()
             pheromone_deposit = 1.0 / (cost + 1e-10)
 
-            for patient in range(NUM_PATIENTS):
-                for i in range(NUM_STATIONS - 1):
+            for patient in range(sp.NUM_PATIENTS):
+                for i in range(sp.NUM_STATIONS - 1):
                     from_station = schedule.visits[patient][i]
                     to_station = schedule.visits[patient][i + 1]
                     pheromones[from_station][to_station] += pheromone_deposit
@@ -138,15 +139,15 @@ def ant_colony_optimization():
 
 # Print the best schedule
 def print_schedule(schedule):
-    for patient_idx in range(NUM_PATIENTS):
+    for patient_idx in range(sp.NUM_PATIENTS):
         print(f"Patient {patient_idx + 1}:")
 
-        station_available = {station: START_TIME for station in STATION_NAMES}
-        patient_available = START_TIME
+        station_available = {station: sp.START_TIME for station in sp.STATION_NAMES}
+        patient_available = sp.START_TIME
 
         for station_idx in schedule.visits[patient_idx]:
-            station = STATION_NAMES[station_idx]
-            processing_time = STATION_TIMES[station]
+            station = sp.STATION_NAMES[station_idx]
+            processing_time = sp.STATION_TIMES[station]
 
             start_time = max(patient_available, station_available[station])
             end_time = start_time + processing_time

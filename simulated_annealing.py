@@ -1,20 +1,21 @@
 import random
 import math
+import scheduling_parameters as sp
 
-# Constants
-NUM_PATIENTS = 10
-NUM_STATIONS = 5
-START_TIME = 13 * 60  # 13:00 in minutes
-END_TIME = 19 * 60  # 19:00 in minutes
-
-STATION_NAMES = ["General Practitioner", "Dietitian", "Orthopedist", "Blood Sample", "Electrocardiogram"]
-STATION_TIMES = {
-    "General Practitioner": 30,
-    "Dietitian": 30,
-    "Orthopedist": 30,
-    "Blood Sample": 20,
-    "Electrocardiogram": 20
-}
+# # Constants
+# NUM_PATIENTS = 10
+# NUM_STATIONS = 5
+# START_TIME = 13 * 60  # 13:00 in minutes
+# END_TIME = 19 * 60  # 19:00 in minutes
+#
+# STATION_NAMES = ["General Practitioner", "Dietitian", "Orthopedist", "Blood Sample", "Electrocardiogram"]
+# STATION_TIMES = {
+#     "General Practitioner": 30,
+#     "Dietitian": 30,
+#     "Orthopedist": 30,
+#     "Blood Sample": 20,
+#     "Electrocardiogram": 20
+# }
 
 INITIAL_TEMP = 1000.0
 FINAL_TEMP = 0.01
@@ -27,18 +28,18 @@ class Schedule:
 
     def get_cost_and_times(self):
         """ Calculate waiting time and actual schedule per patient, enforcing non-concurrency """
-        station_available = {station: START_TIME for station in STATION_NAMES}
-        patient_available = [START_TIME for _ in range(NUM_PATIENTS)]
-        waiting_times = [0 for _ in range(NUM_PATIENTS)]
+        station_available = {station: sp.START_TIME for station in sp.STATION_NAMES}
+        patient_available = [sp.START_TIME for _ in range (sp.NUM_PATIENTS)]
+        waiting_times = [0 for _ in range(sp.NUM_PATIENTS)]
 
         # Schedule matrix: patient -> list of (station_name, start, end)
-        schedule_matrix = [[] for _ in range(NUM_PATIENTS)]
+        schedule_matrix = [[] for _ in range(sp.NUM_PATIENTS)]
 
-        for step in range(NUM_STATIONS):
-            for patient_idx in range(NUM_PATIENTS):
+        for step in range(sp.NUM_STATIONS):
+            for patient_idx in range(sp.NUM_PATIENTS):
                 station_idx = self.visits[patient_idx][step]
-                station = STATION_NAMES[station_idx]
-                duration = STATION_TIMES[station]
+                station = sp.STATION_NAMES[station_idx]
+                duration = sp.STATION_TIMES[station]
 
                 # Find the earliest time both patient and station are available
                 start_time = max(patient_available[patient_idx], station_available[station])
@@ -60,8 +61,8 @@ class Schedule:
 
     def perturb(self):
         new_visits = [list(v) for v in self.visits]
-        p1, p2 = random.sample(range(NUM_PATIENTS), 2)
-        s1, s2 = random.sample(range(NUM_STATIONS), 2)
+        p1, p2 = random.sample(range(sp.NUM_PATIENTS), 2)
+        s1, s2 = random.sample(range(sp.NUM_STATIONS), 2)
         new_visits[p1][s1], new_visits[p2][s2] = new_visits[p2][s2], new_visits[p1][s1]
         return Schedule(new_visits)
 
@@ -95,7 +96,7 @@ def simulated_annealing(initial_schedule):
 
 
 def generate_random_schedule():
-    return Schedule([random.sample(range(NUM_STATIONS), NUM_STATIONS) for _ in range(NUM_PATIENTS)])
+    return Schedule([random.sample(range(sp.NUM_STATIONS), sp.NUM_STATIONS) for _ in range(sp.NUM_PATIENTS)])
 
 
 def print_schedule(schedule):
