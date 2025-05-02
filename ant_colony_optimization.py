@@ -161,7 +161,7 @@ def print_schedule(schedule):
 
 
 # Main
-def main():
+def simulate_day():
     best_schedule = ant_colony_optimization()
     print("\nBest Schedule found:\n")
     print_schedule(best_schedule)
@@ -169,4 +169,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    simulate_day()

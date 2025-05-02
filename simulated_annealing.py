@@ -109,7 +109,7 @@ def print_schedule(schedule):
         print()
 
 
-def main():
+def simulate_day():
     initial_schedule = generate_random_schedule()
     best_schedule = simulated_annealing(initial_schedule)
 
@@ -125,4 +125,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    simulate_day()

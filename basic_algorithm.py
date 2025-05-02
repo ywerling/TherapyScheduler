@@ -71,4 +71,5 @@ def simulate_day():
             print(f"  {station_name} from {start // 60}:{start % 60:02d} to {end // 60}:{end % 60:02d}")
         print(f"  Total Waiting Time: {patient.waiting_time} minutes")
 
-simulate_day()
+if __name__ == "__main__":
+    simulate_day()
