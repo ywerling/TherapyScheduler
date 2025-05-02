@@ -23,37 +23,40 @@ ANNEALING_RATE = 0.995
 
 class Schedule:
     def __init__(self, visits):
-        self.visits = visits
+        self.visits = visits  # visits[patient] = list of station indices
 
-    def get_cost(self):
-        """Calculate waiting time for each patient and return the list."""
+    def get_cost_and_times(self):
+        """ Calculate waiting time and actual schedule per patient, enforcing non-concurrency """
         station_available = {station: START_TIME for station in STATION_NAMES}
-        waiting_times = [0] * NUM_PATIENTS
+        patient_available = [START_TIME for _ in range(NUM_PATIENTS)]
+        waiting_times = [0 for _ in range(NUM_PATIENTS)]
 
-        for patient_idx in range(NUM_PATIENTS):
-            arrival_time = START_TIME
+        # Schedule matrix: patient -> list of (station_name, start, end)
+        schedule_matrix = [[] for _ in range(NUM_PATIENTS)]
 
-            for station_idx in self.visits[patient_idx]:
+        for step in range(NUM_STATIONS):
+            for patient_idx in range(NUM_PATIENTS):
+                station_idx = self.visits[patient_idx][step]
                 station = STATION_NAMES[station_idx]
-                processing_time = STATION_TIMES[station]
+                duration = STATION_TIMES[station]
 
-                # Wait until both the patient and the station are available
-                start_time = max(arrival_time, station_available[station])
-                end_time = start_time + processing_time
+                # Find the earliest time both patient and station are available
+                start_time = max(patient_available[patient_idx], station_available[station])
+                end_time = start_time + duration
 
-                # Update the station's next available time
+                # Update availabilities
+                patient_available[patient_idx] = end_time
                 station_available[station] = end_time
 
-                # Waiting time is difference between arrival and actual start
-                waiting_times[patient_idx] += (start_time - arrival_time)
+                # Record schedule and waiting time
+                waiting_times[patient_idx] += start_time - patient_available[patient_idx]
+                schedule_matrix[patient_idx].append((station, start_time, end_time))
 
-                # Update arrival time for next station
-                arrival_time = end_time
-
-        return waiting_times
+        return waiting_times, schedule_matrix
 
     def total_cost(self):
-        return sum(self.get_cost())
+        waiting_times, _ = self.get_cost_and_times()
+        return sum(waiting_times)
 
     def perturb(self):
         new_visits = [list(v) for v in self.visits]
@@ -96,16 +99,12 @@ def generate_random_schedule():
 
 
 def print_schedule(schedule):
-    for patient_idx in range(NUM_PATIENTS):
+    _, schedule_matrix = schedule.get_cost_and_times()
+
+    for patient_idx, visits in enumerate(schedule_matrix):
         print(f"Patient {patient_idx + 1}:")
-        arrival_time = START_TIME
-        for station_idx in schedule.visits[patient_idx]:
-            station = STATION_NAMES[station_idx]
-            processing_time = STATION_TIMES[station]
-            start_time = arrival_time
-            end_time = start_time + processing_time
-            print(f"  {station}: {start_time // 60:02d}:{start_time % 60:02d} to {end_time // 60:02d}:{end_time % 60:02d}")
-            arrival_time = end_time
+        for station, start, end in visits:
+            print(f"  {station}: {start // 60:02d}:{start % 60:02d} to {end // 60:02d}:{end % 60:02d}")
         print()
 
 
@@ -116,7 +115,7 @@ def main():
     print("Best Schedule Found:\n")
     print_schedule(best_schedule)
 
-    waiting_times = best_schedule.get_cost()
+    waiting_times, _ = best_schedule.get_cost_and_times()
     print("\nTotal Waiting Time per Patient:")
     for idx, wt in enumerate(waiting_times):
         print(f"  Patient {idx + 1}: {wt} minutes")
